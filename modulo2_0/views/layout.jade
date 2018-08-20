@@ -1,0 +1,49 @@
+doctype html
+html.no-js(lang='')
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		title IrrigationSystem
+		meta(name='description', content='IrrigationSystem')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		link(rel='apple-touch-icon', href='apple-icon.png')
+		link(rel='shortcut icon', href='public/favicon.png')
+		link(rel='stylesheet', href='public/assets/css/normalize.css')
+		link(rel='stylesheet', href='public/assets/css/bootstrap.min.css')
+		link(rel='stylesheet', href='public/assets/css/font-awesome.min.css')
+		link(rel='stylesheet', href='public/assets/css/themify-icons.css')
+		link(rel='stylesheet', href='public/assets/css/flag-icon.min.css')
+		link(rel='stylesheet', href='public/assets/css/cs-skin-elastic.css')
+		link(rel='stylesheet', href='public/assets/scss/style.css')
+		link(rel='stylesheet', href='range_style.css')
+		link(href='public/assets/css/lib/vector-map/jqvmap.min.css', rel='stylesheet')
+		link(href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800', rel='stylesheet', type='text/css')
+		block styleContent
+	body
+		// Left-panel
+		include partials/menu_sidebar
+
+		// Right-Panel
+		#right-panel.right-panel
+			// Header
+			header#header.header
+				.header-menu
+					.col-sm-7
+						a#menuToggle.menutoggle.pull-left
+							i.fa.fa.fa-tasks
+						.header-left
+							h1
+								| Irrigation System
+								h1
+			// content
+			.content.mt-3
+				block content
+
+		script(src='public/assets/js/vendor/jquery-2.1.4.min.js')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js')
+		script(src='public/assets/js/plugins.js')
+		script(src='public/assets/js/main.js')
+		script(src='public/assets/js/dashboard.js')
+		script(src='public/assets/js/widgets.js')
+		script(src='range.js')
+		block scripts

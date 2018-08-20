@@ -1,0 +1,142 @@
+<!doctype html>
+<html class="no-js" lang=""> 
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>IrrigationSystem</title>
+	<meta name="description" content="IrrigationSystem">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="apple-touch-icon" href="apple-icon.png">
+	<link rel="shortcut icon" href="public/favicon.png">
+
+	<link rel="stylesheet" href="public/assets/css/normalize.css">
+	<link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="public/assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="public/assets/css/themify-icons.css">
+	<link rel="stylesheet" href="public/assets/css/flag-icon.min.css">
+	<link rel="stylesheet" href="public/assets/css/cs-skin-elastic.css">
+	<!-- <link rel="stylesheet" href="public/assets/css/bootstrap-select.less"> -->
+	<link rel="stylesheet" href="public/assets/scss/style.css">
+
+	<link rel="stylesheet" href="range_style.css">
+	<link href="public/assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+	<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
+</head>
+<body>
+
+
+		<!-- Left Panel -->
+
+	<aside id="left-panel" class="left-panel">
+		<nav class="navbar navbar-expand-sm navbar-default">
+
+			<div class="navbar-header">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fa fa-bars"></i>
+				</button>
+				<a class="navbar-brand" href="./">IrrigationSystem</a>
+				<a class="navbar-brand hidden" href="./">IS</a>
+			</div>
+
+			<div id="main-menu" class="main-menu collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<a href="/page1"> <i class="menu-icon fa fa-dashboard"></i>page1</a>
+					</li>
+					<h3 class="menu-title">Configurações</h3><!-- /.menu-title -->
+					<li class="menu-item-has-children dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Configurações</a>
+						<ul class="sub-menu children dropdown-menu">
+							<li><i class="fa fa-puzzle-piece"></i><a href="/page2">page2</a></li>                            
+						</ul>
+					</li>   
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</nav>
+	</aside><!-- /#left-panel -->
+
+	<!-- Right Panel -->
+
+	<div id="right-panel" class="right-panel">
+
+		<!-- Header-->
+		<header id="header" class="header">
+
+			<div class="header-menu">
+
+				<div class="col-sm-7">
+					<a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+					<div class="header-left">
+						<h1>Irrigation System<h1>
+					</div> 
+				</div> 
+			</div>
+		</header><!-- /header -->
+		<!-- Header-->
+
+
+		<div class="content mt-3">       
+
+		   <!-- MEU CONTEUDO -->
+			<div class="slidecontainer col-sm-12">			  	
+			  	<div class="alert alert-success" role="alert">
+                    <h3 id="output_MaxpH"></h3>
+                </div>
+			  	<input type="range" min="1" max="100" value="50" class="slider" id="Range_MaxpH">
+			  	
+			</div>
+
+			<div class="slidecontainer col-sm-12">
+				<div class="alert alert-success" role="alert">
+                    <h3 id="output_MinpH"></h3>
+                </div>
+			  	<input type="range" min="1" max="100" value="50" class="slider" id="Range_MinpH">
+			  	
+			</div>
+
+			<div class="slidecontainer col-sm-12">
+				<div class="alert alert-success" role="alert">
+                    <h3 id="output_PontoDeMurcha"></h3>
+                </div>
+			  	<input type="range" min="1" max="100" value="50" class="slider" id="Range_PontoDeMurcha">
+			  	
+			</div>
+
+			<div class="slidecontainer col-sm-12">
+				<div class="alert alert-success" role="alert">
+                    <h3 id="output_CapacidadeDeCampo"></h3>
+                </div>
+			 	<input type="range" min="1" max="100" value="50" class="slider" id="Range_CapacidadeDeCampo">
+			 	
+			</div>
+			<row>
+				<div class="col-sm-12">
+	                <button type="button" class="btn btn-outline-success btn-lg btn-block" onclick="send()">Enviar</button>
+	            </div>
+			</row>
+			
+
+		</div> <!-- .content -->
+	</div><!-- /#right-panel -->
+
+	<!-- Right Panel -->
+
+	<script src="public/assets/js/vendor/jquery-2.1.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+	<script src="public/assets/js/plugins.js"></script>
+	<script src="public/assets/js/main.js"></script>
+
+
+	<script src="public/assets/js/dashboard.js"></script>
+	<script src="public/assets/js/widgets.js"></script>
+
+	<script src="range.js"></script>  
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+body{
+	background: white;
+	color: black;
+	text-shadow: 0 .05rem .1rem black;
+	background-image: url(/Custom_WF/img/2.png);
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size:cover;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	display: flex;
+	border-radius: 0;
+	font: 16px sans-serif;
+	margin: 0
+}
+a{
+	color: black;
+	text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .3);
+}
+textarea,input,select{
+	outline: 0;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	padding: 8px;
+	width: 90%
+}
+select{
+	width: 100%
+}
+.btn a{
+	text-decoration: none
+}
+.container{
+	margin: auto;
+	width: 90%
+}
+@media(min-width:1200px){
+	.container{
+		margin: auto;
+		width: 30%
+}
+}
+@media(min-width:768px) and (max-width:1200px){
+	.container{
+		margin: auto;
+		width: 50%
+}
+}
+.btn,h2{
+	font-size: 2em
+}
+h1{
+	font-size: 3em
+}
+.btn{
+	background: rgb(40, 167, 69);
+	border-radius: 4px;
+	border: 0;
+	color: #dcfed7;
+	text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .3);
+	cursor: pointer;
+	display: inline-block;
+	/*margin: 2px 0;
+	padding: 10px 14px 11px;*/
+	width: 100%
+}
+.btn:hover{
+	background: rgb(11, 71, 2)
+}
+.btn:active,.btn:focus{
+	background: rgb(11, 71, 2)
+}
+label{
+	display: inline
+}
+form{
+	display: block;
+	margin-bottom: 10px
+}
+textarea:focus,input{
+	width: 95%;
+	border-radius: 4px;
+	display: inline-block;
+	margin: 2px
+}
+.msg{
+	background: rgb(40, 167, 69);
+	border-left: 5px solid rgba(0, 0, 0, 1);
+	padding: 1.5em
+}
+.l{
+	background: url(/Custom_WF/img/cadeado.png) no-repeat left center;
+	background-size: 1em
+}
+input[type='checkbox']{
+	float: left;
+	width: 20px
+}
+.table td{
+	padding:.5em;
+	text-align:left
+}
+.table tbody>:nth-child(2n-1){
+	background: rgb(40, 167, 69)
+}
+.q{
+	float: right;
+	width: 64px;
+	text-align: right
+}
+
+/*______________________________SELECT____________________________*/
+
+/*the container must be positioned relative:*/
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+.select-selected {
+  background-color: rgb(40, 167, 69);
+}
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: rgb(40, 167, 69);
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+.select-items div:hover, .same-as-selected {
+  background-color: rgb(40, 167, 69);
+}
+
+
+/*______________________________RANGE____________________________*/
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+   /*  width: 100%; Full-width */
+    height: 5px; /* Specified height */
+    background: #d3d3d3  /* #d3d3d3 Grey background   transparent*/
+    outline: none; /* Remove outline */
+    opacity: 0.7; /*Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1;  /*Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /*Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: rgb(40, 167, 69); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;  /*Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: rgb(40, 167, 69); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+/****************************IP ELEMETNES********************************************/
+
+.ip-input-container{
+  display: inline-block;
+  font-size: 0;
+  border: 1px solid #ccc;
+  padding: 1px 0;
+}
+.ip-input-container .ip-input-item{
+  border: none;
+  outline: 0;
+  margin: 0;
+  width: 18%;
+  text-align: center;
+  vertical-align: bottom;
+  font-size: 13px;
+}
+.ip-input-container .ip-input-dot{
+  display: inline-block;
+  width: 2px;
+  height: 2px;
+  margin-bottom: 2px;
+  background-color: #333;
+  border-radius: 50%;
+  vertical-align: bottom;
+}

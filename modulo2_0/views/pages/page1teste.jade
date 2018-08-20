@@ -1,0 +1,26 @@
+extends ../layout
+
+block styleContent
+
+block content
+	.slidecontainer.col-sm-12
+		.alert.alert-success(role='alert')
+			h3#output_MaxpH
+		input#Range_MaxpH.slider(type='range', min='1', max='100', value='50')
+	.slidecontainer.col-sm-12
+		.alert.alert-success(role='alert')
+			h3#output_MinpH
+		input#Range_MinpH.slider(type='range', min='1', max='100', value='50')
+	.slidecontainer.col-sm-12
+		.alert.alert-success(role='alert')
+			h3#output_PontoDeMurcha
+		input#Range_PontoDeMurcha.slider(type='range', min='1', max='100', value='50')
+	.slidecontainer.col-sm-12
+		.alert.alert-success(role='alert')
+			h3#output_CapacidadeDeCampo
+		input#Range_CapacidadeDeCampo.slider(type='range', min='1', max='100', value='50')
+	row
+		.col-sm-12
+			button.btn.btn-outline-success.btn-lg.btn-block(type='button', onclick='send()') Enviar
+
+block scripts
