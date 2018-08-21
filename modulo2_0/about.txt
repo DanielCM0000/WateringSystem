@@ -28,11 +28,24 @@ obs4:	avisar quando o modulo 3 não estiver ligado e tentarem ligar ou desligar
 		com o modulo 3.
 
 obs5:	middleware/decision.js linha 102 essa função não deveria estar aí
-		verificar todas as partes no programa onde função takeADecision é chamada
+		verificar todas as partes no programa onde função takeADecision é chamada											(SOLVED)
 		e ajeitar.
 
-obs6:	fazer uma função no modulo 3 para retornar o status do pino
+obs6:	fazer uma função no modulo 3 para retornar o status do pino															(SOLVED)
 
 erro1 (found on 2018-08-09):	controller/page1.js linha 30
 								typeError: cannot read property 'state' of null
 								solution: verificar se o array de dados não está nulo
+
+erro2: 	na página de configuração do parametos está parecendo um alert que não é necessário
+		quando os dados são enviados. e os DADOSFAKE só são creados quando essa página é aberta 							(SOLVED/NOT AN ERROR)
+
+erro3: na página de configuração mudar a posição pH máx e mín 																(SOLVED)
+
+
+erro4: 	na página de configuração os dados não são salvos a primeira vez que são enviados									(SOLVED)
+
+erro5:	http://localhost:3000/page1/on e http://localhost:3000/page1/off recarregam a página
+		usar um ajax pra fazer isso e atualizar a página
+
+erro6: avisar ao usuário que os dados foram atualizados /page2     															(SOLVED)										                                            

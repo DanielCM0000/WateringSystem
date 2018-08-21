@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/13 15:18:05 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/20 17:39:15 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -30,6 +30,7 @@ module.exports = function(app){
 
 	var modulo1_controller = {
 		action:function(req,res){
+			
 			console.log(req.body);
 
 			var chuva 	=	req.body.chuva;	
@@ -51,7 +52,9 @@ module.exports = function(app){
 				}
 			});		
 
-			irrigationcontroller.decideBasedOn(chuva, pH, umidade, date);		
+			res.send(200);	
+			res.end();
+			irrigationcontroller.decideBasedOn(chuva, pH, umidade, date);
 		}
 	}
 

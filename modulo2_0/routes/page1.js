@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:20:48 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/13 14:33:34 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/21 01:03:24 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -23,10 +23,13 @@ module.exports = function (app) {
 	var controllerPage1 = app.controller.page1;
 
 	app.route('/page1').get(controllerPage1.index);
+	
 
 	app.route('/page1/:turn').get(controllerPage1.turn);
 	
 	app.route('/page1/data/phChart').get(controllerPage1.phChart);
 	app.route('/page1/data/umidadeChart').get(controllerPage1.umidadeChart);
 	app.route('/page1/data/chuvaChart').get(controllerPage1.chuvaChart);
+
+	app.route('/page1/data/chartData').get(controllerPage1.chartData);
 }
