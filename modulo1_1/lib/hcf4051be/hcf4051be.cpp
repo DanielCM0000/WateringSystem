@@ -15,5 +15,5 @@ void hcf4051be::setPins(byte pinread){
 	digitalWrite(_a, bitRead(pinread, 0));		
 	digitalWrite(_b, bitRead(pinread, 1));			
 	digitalWrite(_c, bitRead(pinread, 2));
-
+	delay(1);
 }	

@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:20:48 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/13 14:33:26 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/23 15:23:49 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -19,8 +19,8 @@
 _____________________________________________________________________________________*/
 
 module.exports = function (app){
-	var controllerPage2 = app.controller.page2;
-	app.route('/page2').get(controllerPage2.index);
+	var controllerconfiguracao = app.controller.configuracao;
+	app.route('/configuracao').get(controllerconfiguracao.index);
 
-	app.route('/page2/update').post(controllerPage2.update);
+	app.route('/configuracao/update').post(controllerconfiguracao.update);
 } 

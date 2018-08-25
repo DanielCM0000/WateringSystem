@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:20:48 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/20 22:27:33 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/25 11:05:28 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -33,8 +33,6 @@ output_MinpH.innerHTML =  "pH minimo: " + Range_MinpH.value;
 output_PontoDeMurcha.innerHTML =  "Ponto de murcha: " + Range_PontoDeMurcha.value + "%";
 output_CapacidadeDeCampo.innerHTML =  "Capacidade de Campo: " + Range_CapacidadeDeCampo.value + "%"; 
 
-
-
 Range_MaxpH.oninput = function() {
     output_MaxpH.innerHTML = "pH máximo: " + this.value;
 }
@@ -51,11 +49,14 @@ Range_CapacidadeDeCampo.oninput = function() {
     output_CapacidadeDeCampo.innerHTML = "Capacidade de Campo: " +this.value+ "%";
 } 
 
-function send(){     
-    var max = Range_MaxpH.value;
-    var min = Range_MinpH.value;   
+function send(){    
+    var val_max = Range_MaxpH.value;
+    var val_min = Range_MinpH.value; 
+
+    alert(val_max);
+    alert(val_min);  
    
-    if(max < min){
+    if(Number(val_max) < Number(val_min)){
         alert('O pH máximo não pode ser menor que o pH mínimo');       
         return;
     } 
@@ -67,7 +68,7 @@ function send(){
         capacidade_de_campo : Range_CapacidadeDeCampo.value
     }
 
-	$.post("/page2/update",dt,function(data, status){              
+	$.post("/configuracao/update",dt,function(data, status){              
         if(status == "success"){
             var page2_alert = $('#page2_alert');
             page2_alert.html("<div class='alert alert-primary' role='alert'><center><h3>Dados enviados com sucesso!</h3></center></div>");

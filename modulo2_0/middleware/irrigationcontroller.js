@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/20 15:58:59 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/25 17:50:33 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -50,7 +50,7 @@ module.exports = function (app){
 
 	async function update_TheDate(date){//PARECE QUE ESSA FUNÇÃO NÃO É TOTALMENTE ASSINCRONA
 										//VERIFICAR SE ISSO NÃO PODE CAUSAR UM ERRO
-		await modelModulo3.findOne(function (error,data) {
+		await modelModulo3.findOne(async function (error,data) {
 			if(error) {
 				console.log(error)
 			}else{
@@ -96,10 +96,8 @@ module.exports = function (app){
 					if(error){
 						console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
 						console.log(error);
-					}
-					//console.log(body);						
+					}						
 				});	
-
 			}else{
 				if((chuva) == 1 || umidade>capacidade_de_campo){//sensor de chuva ON/OFF
 					if((chuva) == 1){
@@ -116,31 +114,29 @@ module.exports = function (app){
 						if(error){
 							console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
 							console.log(error);
-						}
-						//console.log(body);						
-					});				
-				
-				}
-
-				if(umidade<ponto_de_murcha){
-					if(umidade>capacidade_de_campo){
+						}						
+					});						
+				}else{
+					if(umidade<ponto_de_murcha){						
 						console.log("umidade: " + umidade);
 						console.log("ponto_de_murcha:" + ponto_de_murcha);
 						console.log("A UMIDADE ATINGIU o ponto_de_murcha");	
-					}	
-					
-					request('http://'+ IPdomodulo3 +'/up',async function (error, response, body) {	
-						if(error){
-							console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
-							console.log(error);
-						}						
-						console.log(body);
-						var tr = JSON.parse(body);
-						if(tr.status == 1 && tr.previous_status ==0){									
-							update_TheDate(date);	
-						}
-					});							
+							
+						
+						request('http://'+ IPdomodulo3 +'/up',async function (error, response, body) {	
+							if(error){
+								console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
+								console.log(error);
+							}						
+							console.log(body);
+							var tr = JSON.parse(body);
+							if(tr.status == 1 && tr.previous_status ==0){									
+								update_TheDate(date);	
+							}
+						});							
+					}
 				}
+				
 			}								
 		}
 	}			

@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 00:35:42 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/21 01:35:57 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/23 15:51:54 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -17,15 +17,48 @@
 /___/_/  /_/  /_/\__, /\__,_/\__/_/\____/_/ /_/   /____/\__, /____/\__/\___/_/ /_/ /_/
                 /____/                                 /____/
 _____________________________________________________________________________________*/
-$.ajax({url: "/page1/data/chartData", success: function(result){	
-	create_chart('chuvaChart', 'chuva', 'rgb(5, 0, 101)', result.labels, result.chuva);
-	create_chart('umidadeChart', 'umidade', 'rgb(135, 0, 1)', result.labels, result.umidade);
-	create_chart('phChart', 'pH','rgb(41, 131, 0)' ,result.labels, result.pH);	
-}});
 
-function create_chart(_chart_id , _label , _backgroundColor,  _labels, _data) {
+chart();
+
+function chart() {
+	$.ajax({url: "/home/data/chartData", success: function(result){		
+		var labels = [];
+		var data_u = [];
+		var data_c = [];
+		var data_p = [];
+		
+		for (var i = result.labels.length - 1; i >= 0; i--) {
+			labels.push(new Date(result.labels[i]).toLocaleString());
+
+			data_u.push({
+				t: new Date(result.labels[i]),
+				y: result.umidade[i]
+			});
+
+			data_c.push({
+				t: new Date(result.labels[i]),
+				y: result.chuva[i]
+			});
+
+			data_p.push({
+				t: new Date(result.labels[i]),
+				y: result.pH[i]
+			});
+		}
+		create_chart('phChart', 'pH','rgb(41, 131, 0)' , labels, data_p);
+		create_chart('umidadeChart', 'umidade', 'rgb(135, 0, 1)', labels, data_u);	
+		create_chart('chuvaChart', 'chuva', 'rgb(5, 0, 101)', labels, data_c);
+	}});
+}
+
+setInterval(chart,30000);
+
+
+
+function create_chart(_chart_id , _label , _backgroundColor,  _labels, _data){
 	var ctx = document.getElementById(_chart_id).getContext('2d');
-	var chart = new Chart(ctx, {
+
+	var config = {
 		// The type of chart we want to create
 		type: 'line',
 
@@ -33,20 +66,19 @@ function create_chart(_chart_id , _label , _backgroundColor,  _labels, _data) {
 		data: {
 			labels: _labels,
 			datasets: [{
-				label: _label,
-				backgroundColor: _backgroundColor,
-				borderColor: 'rgb(0, 0, 0)',
+				label: _label,				
+				borderColor: _backgroundColor,
 				data: _data
 			}]
-		},		
-		options: {
-	        scales: {
-	            xAxes: [{
-	                type: 'time',
-	                distribution: 'linear'
-	            }]
-	        }
-	    }
-	});
+		},
+		options: {			
+			responsive: true,
+			animation: {
+		        duration: 0, // general animation time
+		    },
+			responsiveAnimationDuration: 0, // animation duration after a resize		   
+		}
+	};
+	var chart = new Chart(ctx, config);
 }
 //https://www.chartjs.org/docs/latest/axes/cartesian/time.html

@@ -37,9 +37,9 @@ ________________________________________________________________________________
 #define minutos * (60e6)
 #define hora * (3600e6)
 
-#define chuva !digitalRead(D4);
+#define chuva !digitalRead(D7);
 #define umidade map(_hcf4051be.read(1),0,1024,100,0);
-#define pH (-5.8469*((float)(((float)_hcf4051be.read(2)/1024.0)*5.0))) + 20.621;
+#define pH map(_hcf4051be.read(6),0,1023,140,0);
 
 #define numero_de_leituras_dispensadas 5
 #define numero_de_leituras 30
@@ -48,6 +48,7 @@ ________________________________________________________________________________
 void sendData(String ip);
 
 void setup() {
+	pinMode(D7,INPUT);
 	Serial.begin(9600);
 	RWfile RW_F;
 	WiFiConfig configWiFi;//BY DEFAULT: D6 - RESET, 0X00 - EEPROM
@@ -107,32 +108,28 @@ void sendData(String ip){
 	hcf4051be _hcf4051be(D1, D2, D3, A0);//D1 - A, D2 - B, D3 - C
 	smoother amortizador(numero_de_leituras_dispensadas,numero_de_leituras_dispensadas);
 
-
-	float _umidade[numero_de_leituras];
-    float _pH[numero_de_leituras];
+	float _umidade[numero_de_leituras],  _pH[numero_de_leituras];
     int _chuva = 0;
 
+   	for(int i=0; i<numero_de_leituras; i++){ 
+   		_umidade[i] = umidade;   
+   		_pH[i] = pH;		
+	    _chuva += chuva;
+   	    intervalo_entre_as_leituras;
+   	}
 
 	String data;
 	{//LEITURA DO DADOS NA ENTRADA ANALOGICA E FORMATAÇÃO EM JSON
-
-	   	for(int i=0; i<numero_de_leituras; i++){
-	   		_umidade[i] = umidade;
-	   		_pH[i] = pH;
-		    _chuva += chuva;
-	   	    intervalo_entre_as_leituras;
-	   	}
-
 		DynamicJsonBuffer jsonBuffer;
 	    JsonObject& json = jsonBuffer.createObject();
 
-	    json["pH"] = amortizador.smooth(_pH, numero_de_leituras);
+	    json["pH"] = amortizador.smooth(_pH, numero_de_leituras)/10;
 		json["umidade"]  = amortizador.smooth(_umidade, numero_de_leituras);
-		json["chuva"]  = (_chuva>15)?1:0;
+		json["chuva"]  = (_chuva>5)?1:0;
 		json["id_modulo"]  = String(ESP.getChipId());
-		json.printTo(data);
+		json.prettyPrintTo(data);
 		Serial.println(data);
-	}//FIM_______________________________________________________
+	}//FIM_______________________________________________________	
 
 	//https://techtutorialsx.com/2016/07/21/esp8266-post-requests/
 	//ENVIA AS INFORMAÇÕES DOS SENSORES PRA O MODULO 2
