@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 16:05:55 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/15 03:05:24 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/21 15:18:30 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -17,6 +17,12 @@
 /___/_/  /_/  /_/\__, /\__,_/\__/_/\____/_/ /_/   /____/\__, /____/\__/\___/_/ /_/ /_/
                 /____/                                 /____/
 _____________________________________________________________________________________*/
+
+/*
+	ESSE PROGRAMA RETORNA O IP ATUAL DO MÓDULO 3. ISSO É FEITO DE MODO ASSINCRONO, OU SEJA,
+	QUANDO ESSA FUNÇÃO É CHAMADA NÃO ACONTECE A EXECUÇÃO DE OUTRAS PARTES DO CÓDIGO ENQUANTO
+	ESSA FUNÇÃO NÃO RETORNAR UM VALOR.
+*/
 
 module.exports = function (app){
 	var modelModulo3 =  app.model.modulo3;
@@ -33,7 +39,6 @@ module.exports = function (app){
 				}					
 			}
 		});	
-		return _ip;		
-
+		return _ip;	
 	}
 }

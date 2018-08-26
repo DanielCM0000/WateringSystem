@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/13 15:29:05 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/20 15:52:59 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -23,7 +23,8 @@ var mongoose = require('mongoose');
 module.exports = function () {
 	var module3Schema = mongoose.Schema({
 		id_module : {type: String},
-		ip        : {type: String}
+		ip        : {type: String},
+		date:{type: Date, default: new Date(1999, 11, 24, 10, 33, 30, 0)}
 	});
 
 	return mongoose.model('module3Schema',module3Schema);

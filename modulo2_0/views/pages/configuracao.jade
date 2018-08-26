@@ -10,30 +10,24 @@ html.no-js(lang='')
     link(rel='stylesheet', href='/assets/css/normalize.css')
     link(rel='stylesheet', href='/assets/css/bootstrap.min.css')
     link(rel='stylesheet', href='/assets/css/font-awesome.min.css')
-    link(rel='stylesheet', href='/assets/css/themify-icons.css')
-    link(rel='stylesheet', href='/assets/css/flag-icon.min.css')
-    link(rel='stylesheet', href='/assets/css/cs-skin-elastic.css')
-    // <link rel="stylesheet" href="/assets/css/bootstrap-select.less">
     link(rel='stylesheet', href='/assets/scss/style.css')
     link(rel='stylesheet', href='/css/range_style.css')
-    link(href='/assets/css/lib/vector-map/jqvmap.min.css', rel='stylesheet')
     link(href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800', rel='stylesheet', type='text/css')
-    // <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script>
-  body
+  body.open
     // Left Panel
     aside#left-panel.left-panel
       nav.navbar.navbar-expand-sm.navbar-default
         .navbar-header
           button.navbar-toggler(type='button', data-toggle='collapse', data-target='#main-menu', aria-controls='main-menu', aria-expanded='false', aria-label='Toggle navigation')
             i.fa.fa-bars
-          a.navbar-brand(href='./') IrrigationSystem
-          a.navbar-brand.hidden(href='./') IS
+          a.navbar-brand(href='./') sistema de Irrigação
+          a.navbar-brand.hidden(href='./') SI
         #main-menu.main-menu.collapse.navbar-collapse
           ul.nav.navbar-nav
             li.active
-              a(href='/page1')
+              a(href='/home')
                 i.menu-icon.fa.fa-dashboard
-                | page1
+                | Home
             h3.menu-title Configurações
             // /.menu-title
             li.menu-item-has-children.dropdown
@@ -43,7 +37,7 @@ html.no-js(lang='')
               ul.sub-menu.children.dropdown-menu
                 li
                   i.fa.fa-puzzle-piece
-                  a(href='/page2') page2
+                  a(href='/configuracao') Configuração
         // /.navbar-collapse
     // /#left-panel
     // Right Panel
@@ -63,13 +57,15 @@ html.no-js(lang='')
       .content.mt-3
         // MEU CONTEUDO
         .slidecontainer.col-sm-12
-          .alert.alert-success(role='alert')
-            h3#output_MaxpH
-          input#Range_MaxpH.slider(type='range', min='0', max='14', step='0.01', value=param[0].pH_max)
+          #page2_alert
         .slidecontainer.col-sm-12
           .alert.alert-success(role='alert')
             h3#output_MinpH
-          input#Range_MinpH.slider(type='range', min='0', max='14', step='0.01', value=param[0].pH_min)
+          input#Range_MinpH.slider(type='range', min='0', max='14', step='0.01', value=param[0].pH_min)          
+        .slidecontainer.col-sm-12
+          .alert.alert-success(role='alert')
+            h3#output_MaxpH
+          input#Range_MaxpH.slider(type='range', min='0', max='14', step='0.01', value=param[0].pH_max)          
         .slidecontainer.col-sm-12
           .alert.alert-success(role='alert')
             h3#output_PontoDeMurcha
@@ -88,31 +84,5 @@ html.no-js(lang='')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js')
     script(src='/assets/js/plugins.js')
     script(src='/assets/js/main.js')
-    script(src='/assets/js/lib/chart-js/Chart.bundle.js')
-    script(src='/assets/js/dashboard.js')
-    script(src='/assets/js/widgets.js')
-    script(src='/assets/js/lib/vector-map/jquery.vmap.js')
-    script(src='/assets/js/lib/vector-map/jquery.vmap.min.js')
-    script(src='/assets/js/lib/vector-map/jquery.vmap.sampledata.js')
-    script(src='/assets/js/lib/vector-map/country/jquery.vmap.world.js')
-    script.
-      ( function ( $ ) {
-      "use strict";
-      jQuery( '#vmap' ).vectorMap( {
-      map: 'world_en',
-      backgroundColor: null,
-      color: '#ffffff',
-      hoverOpacity: 0.7,
-      selectedColor: '#1de9b6',
-      enableZoom: true,
-      showTooltip: true,
-      values: sample_data,
-      scaleColors: [ '#1de9b6', '#03a9f5' ],
-      normalizeFunction: 'polynomial'
-      } );
-      } )( jQuery );
-    // Chart js
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-    script(src='/assets/js/lib/chart-js/Chart.bundle.js')
-    script(src='/assets/js/lib/chart-js/chartjs-init.js')
+    script(type='text/javascript',src='/js/jquery.min.js')
     script(src='/js/range.js')

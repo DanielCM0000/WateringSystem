@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   page2.js                                           :+:      :+:    :+:   */
+/*   configuracao.js                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/13 15:18:31 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/23 15:29:07 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -17,11 +17,15 @@
 /___/_/  /_/  /_/\__, /\__,_/\__/_/\____/_/ /_/   /____/\__, /____/\__/\___/_/ /_/ /_/
                 /____/                                 /____/
 _____________________________________________________________________________________*/
+/*
+	
+*/
 
 module.exports = function (app) {
 	var updateParameters = app.model.decisionparameters;
 	var irrigationcontroller = app.middleware.irrigationcontroller;
-	var controllerPage2 = {
+
+	var controllerconfiguracao = {
 		index:function (req, res) {
 			updateParameters.find(function (error, data) {
 				if(error){
@@ -30,9 +34,8 @@ module.exports = function (app) {
 				}else{					
 					if(data.length > 0){	
 						console.log(data);
-						res.render('pages/page2',{ param: data});												
+						res.render('pages/configuracao',{ param: data});												
 					}else{
-						//CREATE FAKE DATA
 						console.log('CREATE FAKE DATA');
 						var fake_data = [{
 							ponto_de_murcha : 0, 
@@ -40,7 +43,7 @@ module.exports = function (app) {
 							pH_max : 0, 
 							pH_min : 0
 						}];
-						res.render('pages/page2',{param: fake_data});
+						res.render('pages/configuracao',{param: fake_data});
 					}
 				}
 			});		
@@ -48,35 +51,38 @@ module.exports = function (app) {
 		},		
 
 		update:function (req, res) {
-			updateParameters.findOne(function(error, data){
-				console.log(data);
+			updateParameters.findOne(function(error, data){				
 				if(error){
 					console.log(error);
 					res.status(500).send(error);// DEALING WITH DB ERROR
-				}else{		
-					if(data){	
+				}else{						
+					console.log(data);
+					var d;
+					if(data){
+						d = data;
 						console.log("data already exist");
-						data.ponto_de_murcha = req.body.ponto_de_murcha; 
-						data.capacidade_de_campo = req.body.capacidade_de_campo; 
-						data.pH_max = req.body.pH_max; 
-						data.pH_min = req.body.pH_min;
-						data.save(); 
-						irrigationcontroller.updateParameters();
-					}else{						
+					}else{
+						d =  new updateParameters();
 						console.log("data doesn't exist");
-						var param = new updateParameters();
-						param.ponto_de_murcha = req.body.ponto_de_murcha; 
-						param.capacidade_de_campo = req.body.capacidade_de_campo; 
-						param.pH_max = req.body.pH_max; 
-						param.pH_min = req.body.pH_min;
-						param.save(); 
-						console.log("Saved");
-						irrigationcontroller.updateParameters();
 					}
+
+					d.ponto_de_murcha = req.body.ponto_de_murcha; 
+					d.capacidade_de_campo = req.body.capacidade_de_campo; 
+					d.pH_max = req.body.pH_max; 
+					d.pH_min = req.body.pH_min;
+					d.save(function(error){
+						if(error){
+							console.log(error);
+						}else{
+							console.log("Saved");
+							irrigationcontroller.updateParameters();
+							res.send(200);
+						}							
+					}); 						
 				}
 			});			
 		}
 	}
 	
-	return controllerPage2;
+	return controllerconfiguracao;
 }

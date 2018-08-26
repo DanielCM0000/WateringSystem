@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/13 15:39:05 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/20 18:50:31 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -18,10 +18,8 @@
                 /____/                                 /____/
 _____________________________________________________________________________________*/
 /*
-	DEPOIS MUDAR ISSO 
-	O MÓDULO3 VAI PODER REESCREVER SEUS DADOS NO BANCO DE DADOS 
-	SÓ NÃO PODE HAVER DOIS MÓDULOS3 
-	O MÓDULO3 VAI FICAR PRESO A SUA ID
+	O MÓDULO3 VAI PODER REESCREVER SEUS DADOS NO BANCO DE DADOS	
+	res.status(500).send(error);//DB ERROR
 */
 
 
@@ -29,25 +27,26 @@ module.exports = function(app){
 	var modelModulo3 = app.model.modulo3;	
 	var controllerModulo3 = {
 		action:function(req,res){
-			//PARA GARANTIR QUE SÓ HAJA UM MÓDULO3
-			modelModulo3.findOne(function(error, data) {
+			console.log(req.body);			
+			modelModulo3.findOne(function(error, data){//PARA GARANTIR QUE SÓ HAJA APENAS UM MÓDULO 3
 				if(error){
-					console.log(error);
-					res.status(500).send(error);//DB ERROR
+					console.log(error);					
 				}else{
-					if(data){
+					if(data){//SE JÁ EXISTIR ALGUM DADO SALVO ELE SERÁ REESCRITO
+						console.log("Já existe um módulo 3 salvo. Seus dados serão reescritos");
 						data.id_module = req.body.id_module;
 						data.ip = req.body.ip;
 						data.save();
 					}else{
+						console.log("Salvando dados do módulo 3");
 						var M = new modelModulo3();
 						M.id_module = req.body.id_module;
 						M.ip = req.body.ip;
-						M.save();
-						console.log(req.body);
+						M.save();						
 					}
 				}
-			});						
+			});	
+			res.send(200);					
 		}
 	}
 	

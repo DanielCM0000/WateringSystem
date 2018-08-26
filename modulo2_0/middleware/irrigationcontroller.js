@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/15 00:54:19 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/25 17:50:33 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -20,7 +20,7 @@ ________________________________________________________________________________
 
 /*
 	ESSE PROGRAMA TOMA AS DECIÕES AUTOMAMATICAMENTE PRA LIGAR OU DELIGAR O SISTEMA DE 
-	IRRIGAÇÃO BASEADO NOS DADOS DE PH MÁX E MIN, CAPACIDADE DE CAMPO E PONTO DE MUCHAR
+	IRRIGAÇÃO BASEADO NOS DADOS DE PH MÁX E MIN, CAPACIDADE DE CAMPO E PONTO DE MURCHA
 	ESSES DADOS ESTÃO SALVOS NO BANCO DE DADOS E SÃO AUTUALIZADOS PELO USUÁRIO NA 
 	INTERFACE PRA CONFIGURAÇÃO DESSES PARAMETROS.
 
@@ -34,21 +34,23 @@ ________________________________________________________________________________
 	BANCO DE DADOS: upDate_TheDate E upDate_Module3Status(status). A PRIMEIRA ATUALIZA 
 	HORA QUE OS DADOS DO MODULO CHEGOU E A SEGUNDA ATUALIZA O STATUS (LIGADO/DELIGADO)
 	DO MÓDULO 3.
-
 */
 var request = require('request');
 
-module.exports = function (app) {
-	
+module.exports = function (app){	
+	//MODELS	
+	var decisionparameters = app.model.decisionparameters;	
 	var modelModulo3 =  app.model.modulo3;
-	var lastTimeON = app.model.lastTimeON;
-	var decisionparameters = app.model.decisionparameters;
+
+	//HELPER
+	var get_Module3_IP = app.middleware.IPmodulo3;	
 	
 	//PARAMENTROS QUE SÃO COMPARADOS COM OS DADOS DOS SENSORES
 	var ponto_de_murcha, capacidade_de_campo, pH_max, pH_min;	
 
-	async function update_TheDate(date){
-		await lastTimeON.findOne(function (error,data) {
+	async function update_TheDate(date){//PARECE QUE ESSA FUNÇÃO NÃO É TOTALMENTE ASSINCRONA
+										//VERIFICAR SE ISSO NÃO PODE CAUSAR UM ERRO
+		await modelModulo3.findOne(async function (error,data) {
 			if(error) {
 				console.log(error)
 			}else{
@@ -56,25 +58,7 @@ module.exports = function (app) {
 				data.save();
 			}
 		});
-	}	
-
-	
-	async function get_Module3_IP(){
-		var _ip;
-		await modelModulo3.findOne(function(error, data) {							
-			if(error){
-				console.log(error);
-			}else{				
-				if(data){								
-					ip = data.ip;																		
-				}else{						
-					console.log("no module 3 saved");
-				}					
-			}
-		});	
-		return ip;	
 	}		
-	
 
 	var functions = {		
 		updateParameters: function () {
@@ -108,10 +92,12 @@ module.exports = function (app) {
 					console.log("o pH é inferior ao valor de pH mínino");
 				}
 
-				request('http://'+ IPdomodulo3 +'/down',function (error, response, body) {
-					console.log(body);						
+				request('http://'+ IPdomodulo3 +'/down',async function (error, response, body) {
+					if(error){
+						console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
+						console.log(error);
+					}						
 				});	
-
 			}else{
 				if((chuva) == 1 || umidade>capacidade_de_campo){//sensor de chuva ON/OFF
 					if((chuva) == 1){
@@ -124,27 +110,33 @@ module.exports = function (app) {
 						console.log("A UMIDADE ATINGIU A capacidade_de_campo");	
 					}
 	
-					request('http://'+ IPdomodulo3 +'/down',function (error, response, body) {
-						console.log(body);						
-					});				
-				
-				}
-
-				if(umidade<ponto_de_murcha){
-					if(umidade>capacidade_de_campo){
+					request('http://'+ IPdomodulo3 +'/down',async function (error, response, body) {
+						if(error){
+							console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
+							console.log(error);
+						}						
+					});						
+				}else{
+					if(umidade<ponto_de_murcha){						
 						console.log("umidade: " + umidade);
 						console.log("ponto_de_murcha:" + ponto_de_murcha);
 						console.log("A UMIDADE ATINGIU o ponto_de_murcha");	
-					}	
-					
-					request('http://'+ IPdomodulo3 +'/up',function (error, response, body) {							
-						console.log(body);
-						var tr = JSON.parse(body);
-						if(tr.status == 1 && tr.previous_status ==0){									
-							update_TheDate(date);	
-						}
-					});							
+							
+						
+						request('http://'+ IPdomodulo3 +'/up',async function (error, response, body) {	
+							if(error){
+								console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
+								console.log(error);
+							}						
+							console.log(body);
+							var tr = JSON.parse(body);
+							if(tr.status == 1 && tr.previous_status ==0){									
+								update_TheDate(date);	
+							}
+						});							
+					}
 				}
+				
 			}								
 		}
 	}			
