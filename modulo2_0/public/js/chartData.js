@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 00:35:42 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/23 15:51:54 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/27 14:16:35 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -72,7 +72,7 @@ function create_chart(_chart_id , _label , _backgroundColor,  _labels, _data){
 			}]
 		},
 		options: {			
-			responsive: true,
+			//responsive: true,
 			animation: {
 		        duration: 0, // general animation time
 		    },
