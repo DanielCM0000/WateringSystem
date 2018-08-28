@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/21 00:35:42 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/27 14:16:35 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/28 10:21:34 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -18,11 +18,48 @@
                 /____/                                 /____/
 _____________________________________________________________________________________*/
 
-chart();
+
+var um,ph,ch;
+
+$.ajax({url: "/home/data/chartData", success: function(result){		
+	var labels = [];
+	var labels_ph = [];
+	var data_u = [];
+	var data_c = [];
+	var data_p = [];
+	
+	for (var i = result.labels.length - 1; i >= 0; i--) {
+		labels.push(new Date(result.labels[i]).toLocaleString());
+
+		data_u.push({
+			t: new Date(result.labels[i]),
+			y: result.umidade[i]
+		});
+
+		data_c.push({
+			t: new Date(result.labels[i]),
+			y: result.chuva[i]
+		});			
+	}		
+
+	for (var i = result.ph_labels.length - 1; i >= 0; i--) {
+		labels_ph.push(new Date(result.ph_labels[i]).toLocaleString());
+		data_p.push({
+			t: new Date(result.ph_labels[i]),
+			y: result.pH[i]
+		});
+	}	
+
+	ph = create_chart('phChart', 'pH','rgb(41, 131, 0)' , labels_ph, data_p);
+	um = create_chart('umidadeChart', 'umidade', 'rgb(135, 0, 1)', labels, data_u);	
+	ch = create_chart('chuvaChart', 'chuva', 'rgb(5, 0, 101)', labels, data_c);
+	setInterval(chart,30000);
+}});
 
 function chart() {
 	$.ajax({url: "/home/data/chartData", success: function(result){		
 		var labels = [];
+		var labels_ph = [];
 		var data_u = [];
 		var data_c = [];
 		var data_p = [];
@@ -38,22 +75,31 @@ function chart() {
 			data_c.push({
 				t: new Date(result.labels[i]),
 				y: result.chuva[i]
-			});
+			});			
+		}		
 
+		for (var i = result.ph_labels.length - 1; i >= 0; i--) {
+			labels_ph.push(new Date(result.ph_labels[i]).toLocaleString());
 			data_p.push({
-				t: new Date(result.labels[i]),
+				t: new Date(result.ph_labels[i]),
 				y: result.pH[i]
 			});
-		}
-		create_chart('phChart', 'pH','rgb(41, 131, 0)' , labels, data_p);
-		create_chart('umidadeChart', 'umidade', 'rgb(135, 0, 1)', labels, data_u);	
-		create_chart('chuvaChart', 'chuva', 'rgb(5, 0, 101)', labels, data_c);
+		}	
+		
+	    um.data.datasets[0].data = data_u;
+	    um.data.labels = labels;
+		um.update();
+
+
+		ch.data.datasets[0].data = data_c;
+	    ch.data.labels = labels;
+		ch.update();
+		
+		ph.data.datasets[0].data = data_p;
+	    ph.data.labels = labels_ph;
+		ph.update();		
 	}});
 }
-
-setInterval(chart,30000);
-
-
 
 function create_chart(_chart_id , _label , _backgroundColor,  _labels, _data){
 	var ctx = document.getElementById(_chart_id).getContext('2d');
@@ -72,13 +118,28 @@ function create_chart(_chart_id , _label , _backgroundColor,  _labels, _data){
 			}]
 		},
 		options: {			
-			//responsive: true,
-			animation: {
-		        duration: 0, // general animation time
-		    },
-			responsiveAnimationDuration: 0, // animation duration after a resize		   
+			responsive: true,
+			//animation: {
+		        //duration: 0, // general animation time
+		    //},
+			//responsiveAnimationDuration: 0, // animation duration after a resize				
+			scales: {				
+				xAxes: [{
+		            ticks: {
+		            	distribution: 'series',
+		                beginAtZero: true
+		            }
+		        }],
+		        yAxes: [{
+		            ticks: {
+		                beginAtZero: true
+		            }
+		        }]
+		    }	   
 		}
 	};
 	var chart = new Chart(ctx, config);
+
+	return chart;	
 }
 //https://www.chartjs.org/docs/latest/axes/cartesian/time.html

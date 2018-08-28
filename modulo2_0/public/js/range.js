@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:20:48 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/25 11:05:28 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/28 00:39:57 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -52,9 +52,6 @@ Range_CapacidadeDeCampo.oninput = function() {
 function send(){    
     var val_max = Range_MaxpH.value;
     var val_min = Range_MinpH.value; 
-
-    alert(val_max);
-    alert(val_min);  
    
     if(Number(val_max) < Number(val_min)){
         alert('O pH máximo não pode ser menor que o pH mínimo');       

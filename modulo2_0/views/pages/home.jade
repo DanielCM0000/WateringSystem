@@ -68,13 +68,13 @@ html.no-js(lang='')
 									| O módulo 3 não está conectado a rede!
 							if(state == 3)
 								.alert.alert-danger(role='alert')
-									| Nenhum módulo 3 foi configurado ainda!
-				.col-md-6
-					canvas#phChart
+									| Nenhum módulo 3 foi configurado ainda!			
 				.col-md-6
 					canvas#umidadeChart
 				.col-md-6
 					canvas#chuvaChart
+				.col-md-6
+					canvas#phChart
 				// /.col
 				.col-sm-12
 					button.btn.btn-outline-primary.btn-lg.btn-block(type='button', onclick="turn_on()") Irrigar agora
