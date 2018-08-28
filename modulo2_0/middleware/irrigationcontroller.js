@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/25 17:50:33 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/27 15:18:05 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -43,22 +43,9 @@ module.exports = function (app){
 	var modelModulo3 =  app.model.modulo3;
 
 	//HELPER
-	var get_Module3_IP = app.middleware.IPmodulo3;	
 	
 	//PARAMENTROS QUE SÃO COMPARADOS COM OS DADOS DOS SENSORES
 	var ponto_de_murcha, capacidade_de_campo, pH_max, pH_min;	
-
-	async function update_TheDate(date){//PARECE QUE ESSA FUNÇÃO NÃO É TOTALMENTE ASSINCRONA
-										//VERIFICAR SE ISSO NÃO PODE CAUSAR UM ERRO
-		await modelModulo3.findOne(async function (error,data) {
-			if(error) {
-				console.log(error)
-			}else{
-				data.date = date;
-				data.save();
-			}
-		});
-	}		
 
 	var functions = {		
 		updateParameters: function () {
@@ -77,67 +64,86 @@ module.exports = function (app){
 			});
 		},
 
-		decideBasedOn: async function(chuva,pH,umidade,date){					
-			var IPdomodulo3 = await get_Module3_IP();	
-			console.log(IPdomodulo3);		
-			if((pH > pH_max) || (pH < pH_min)){// AVISAR O USÁRIO QUE O PH ESTÁ FORA DA FAIXA
-				if(pH > pH_max){
-					console.log("pH: " + pH);
-					console.log("pH_max: " + pH_max);
-					console.log("o pH é superior ao valor de pH máximo");
+		decideBasedOn:  function(chuva,pH,umidade,date){		
+			modelModulo3.findOne( function(error, data) {							
+				if(error){
+					console.log(error);
+				}else{				
+					if(data){	
+						zxc(data.ip);																	
+					}else{						
+						console.log("no module 3 saved");
+					}					
 				}
-				if(pH < pH_min){
-					console.log("pH: " + pH);
-					console.log("pH_min: " + pH_min);
-					console.log("o pH é inferior ao valor de pH mínino");
-				}
+			});	
+				
+			function zxc(IPdomodulo3) {
+				console.log(IPdomodulo3);
+				if((pH > pH_max) || (pH < pH_min)){// AVISAR O USÁRIO QUE O PH ESTÁ FORA DA FAIXA
+					if(pH > pH_max){
+						console.log("pH: " + pH);
+						console.log("pH_max: " + pH_max);
+						console.log("o pH é superior ao valor de pH máximo");
+					}
+					if(pH < pH_min){
+						console.log("pH: " + pH);
+						console.log("pH_min: " + pH_min);
+						console.log("o pH é inferior ao valor de pH mínino");
+					}
 
-				request('http://'+ IPdomodulo3 +'/down',async function (error, response, body) {
-					if(error){
-						console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
-						console.log(error);
-					}						
-				});	
-			}else{
-				if((chuva) == 1 || umidade>capacidade_de_campo){//sensor de chuva ON/OFF
-					if((chuva) == 1){
-						console.log("chuva:" + chuva);
-						console.log("ESTÁ CHOVENDO");
-					}
-					if(umidade>capacidade_de_campo){
-						console.log("umidade: " + umidade);
-						console.log("capacidade_de_campo:" + capacidade_de_campo);
-						console.log("A UMIDADE ATINGIU A capacidade_de_campo");	
-					}
-	
-					request('http://'+ IPdomodulo3 +'/down',async function (error, response, body) {
+					request('http://'+ IPdomodulo3 +'/down', function (error, response, body) {
 						if(error){
 							console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
 							console.log(error);
 						}						
-					});						
+					});	
 				}else{
-					if(umidade<ponto_de_murcha){						
-						console.log("umidade: " + umidade);
-						console.log("ponto_de_murcha:" + ponto_de_murcha);
-						console.log("A UMIDADE ATINGIU o ponto_de_murcha");	
-							
-						
-						request('http://'+ IPdomodulo3 +'/up',async function (error, response, body) {	
+					if((chuva) == 1 || umidade>capacidade_de_campo){//sensor de chuva ON/OFF
+						if((chuva) == 1){
+							console.log("chuva:" + chuva);
+							console.log("ESTÁ CHOVENDO");
+						}
+						if(umidade>capacidade_de_campo){
+							console.log("umidade: " + umidade);
+							console.log("capacidade_de_campo:" + capacidade_de_campo);
+							console.log("A UMIDADE ATINGIU A capacidade_de_campo");	
+						}
+		
+						request('http://'+ IPdomodulo3 +'/down', function (error, response, body) {
 							if(error){
 								console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
 								console.log(error);
 							}						
-							console.log(body);
-							var tr = JSON.parse(body);
-							if(tr.status == 1 && tr.previous_status ==0){									
-								update_TheDate(date);	
-							}
-						});							
-					}
+						});						
+					}else{
+						if(umidade<ponto_de_murcha){						
+							console.log("umidade: " + umidade);
+							console.log("ponto_de_murcha:" + ponto_de_murcha);
+							console.log("A UMIDADE ATINGIU o ponto_de_murcha");	
+								
+							
+							request('http://'+ IPdomodulo3 +'/up', function (error, response, body) {	
+								if(error){
+									console.log("OCORREU UM ERRO NA COMUNICAÇÃO COM O MÓDULO 3");
+									console.log(error);
+								}						
+								console.log(body);
+								var tr = JSON.parse(body);
+								if(tr.status == 1 && tr.previous_status ==0){								
+									modelModulo3.findOne(function (error,data){
+										if(error) {
+											console.log(error)
+										}else{
+											data.date = date;
+											data.save();
+										}
+									});
+								}
+							});							
+						}
+					}				
 				}
-				
-			}								
+			}											
 		}
 	}			
 

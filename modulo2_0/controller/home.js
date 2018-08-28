@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/23 15:21:48 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/27 15:20:58 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -28,57 +28,83 @@ module.exports = function (app) {
 	var get_Module3_IP = app.middleware.IPmodulo3;	
 	var modelModulo3 =  app.model.modulo3;
 
-	var Module3_IP;
 	var controllerhome = {
 		redirect:function (req, res) {
 			res.redirect("/home");
 		},
 
-		index:async function (req, res){
-			Module3_IP = await get_Module3_IP();
-			if(Module3_IP == undefined){
-				console.log("NÃO HÁ NENHUM MÓDULO 3 CONFIGURADO NO SISTEMA");
-				res.render('pages/home', {state: 3});
-			}else{
-				request('http://'+ Module3_IP +'/status',function (error, response, body) {	
-					if(error)console.log(error);//APENAS PRA MOSTRAR ALGUM ERRO QUE OCORRA					
-					console.log(body);
-					if(body == undefined){						
-						console.log("O MÓDULO 3 NÃO ESTÁ CONECTADO A REDE");
-						res.render('pages/home', {state: 2});
-					}else{
-						var tr = JSON.parse(body);						
-						res.render('pages/home', {state: tr.status});
-					}								
-				});	
-			}				
+		index:function (req, res){			
+			modelModulo3.findOne( function(error, data) {							
+				if(error){
+					console.log(error);
+				}else{				
+					if(data){	
+						zxc(data.ip);																	
+					}else{						
+						console.log("no module 3 saved");
+					}					
+				}
+			});	
+
+			function zxc(Module3_IP) {
+				if(Module3_IP == undefined){
+					console.log("NÃO HÁ NENHUM MÓDULO 3 CONFIGURADO NO SISTEMA");
+					res.render('pages/home', {state: 3});
+				}else{
+					request('http://'+ Module3_IP +'/status',function (error, response, body) {	
+						if(error)console.log(error);//APENAS PRA MOSTRAR ALGUM ERRO QUE OCORRA					
+						console.log(body);
+						if(body == undefined){						
+							console.log("O MÓDULO 3 NÃO ESTÁ CONECTADO A REDE");
+							res.render('pages/home', {state: 2});
+						}else{
+							var tr = JSON.parse(body);						
+							res.render('pages/home', {state: tr.status});
+						}								
+					});	
+				}
+			}							
 		},
 
-		turn:async function (req, res){			
-			Module3_IP = await get_Module3_IP();
-			var action;
-			if(req.params.turn == 'on')
-				action = '/up';
-			else
-				action = '/down';			
-						
+		turn:function (req, res){			
 			
-			if(Module3_IP == undefined){
-				console.log("não há nenhum módulo 3 configurado");
-				res.send({state: 3});
-			}else{
-				request('http://'+ Module3_IP +action,function (error, response, body) {	
-					if(error)console.log(error);//APENAS PRA MOSTRAR ALGUM ERRO QUE OCORRA
-					console.log(body);
-					if(body == undefined){
-						console.log("não conseguiu se conectar com o módulo 3");
-						res.send({state: 2});
-					}else{
-						var tr = JSON.parse(body);	
-						res.send({state: tr.status});											
-					}							
-				});	
-			}				
+			modelModulo3.findOne( function(error, data) {							
+				if(error){
+					console.log(error);
+				}else{				
+					if(data){		
+						zxc(data.ip);																	
+					}else{						
+						console.log("no module 3 saved");
+					}					
+				}
+			});	
+
+			function zxc(Module3_IP) {
+				var action;
+				if(req.params.turn == 'on')
+					action = '/up';
+				else
+					action = '/down';			
+							
+				
+				if(Module3_IP == undefined){
+					console.log("não há nenhum módulo 3 configurado");
+					res.send({state: 3});
+				}else{
+					request('http://'+ Module3_IP +action,function (error, response, body) {	
+						if(error)console.log(error);//APENAS PRA MOSTRAR ALGUM ERRO QUE OCORRA
+						console.log(body);
+						if(body == undefined){
+							console.log("não conseguiu se conectar com o módulo 3");
+							res.send({state: 2});
+						}else{
+							var tr = JSON.parse(body);	
+							res.send({state: tr.status});											
+						}							
+					});	
+				}	
+			}						
 		},		
 
 		chartData:function (req,res) {
