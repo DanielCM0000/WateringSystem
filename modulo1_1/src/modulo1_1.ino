@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/14 21:05:20 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/28 11:32:45 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________
@@ -32,6 +32,10 @@ ________________________________________________________________________________
 #include <EEPROM.h>
 #include <hcf4051be.h>
 #include <ESP8266HTTPClient.h>
+#include <Ticker.h>
+
+bool flag = false;
+Ticker myTicker;
 
 //#define segundos * (1e6)
 #define minutos * (60e6)
@@ -50,12 +54,14 @@ void sendData(String ip);
 void setup() {
 	pinMode(D7,INPUT);
 	Serial.begin(9600);
+	myTicker.attach(3*60,doSomething);
 	RWfile RW_F;
 	WiFiConfig configWiFi;//BY DEFAULT: D6 - RESET, 0X00 - EEPROM
 
 	String html = "/Custom_WF/html/Param.html", favicon = "/Custom_WF/img/L.png", icon = "/Custom_WF/img/L.png", js = "/Custom_WF/js/script.js",css = "/Custom_WF/css/style.css";
 	configWiFi.start(css,js,html,favicon,icon);
-
+	flag = true;
+	
 	String newData = configWiFi.getData();
 	if(newData.length() != 0){
 		RW_F.writeFile(newData, "/DB/config.json");//SE HOUVER ALGUM DADO NOVO, ELE SERÁ SALVO NA MEMÓRIA FLASH
@@ -142,4 +148,11 @@ void sendData(String ip){
  	http.end();  //Close connection
  	//String payload = http.getString();
 	//FIM______________________________________________
+}
+
+void doSomething(void){
+	if(!flag){
+		ESP.restart();
+	}
+	myTicker.detach();
 }
