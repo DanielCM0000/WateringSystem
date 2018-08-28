@@ -37,7 +37,7 @@ void setup(){
 
 	RWfile RW_F;
 	
-	String html = "/Custom_WF/html/Param.html", favicon = "/Custom_WF/img/L.png", icon = "/Custom_WF/img/L.png", js = "/Custom_WF/js/jquery.js;/Custom_WF/js/script.js",css = "/Custom_WF/css/style.css";
+	String html = "/Custom_WF/html/Param.html", favicon = "/Custom_WF/img/L.png", icon = "/Custom_WF/img/L.png", js = "/Custom_WF/js/script.js",css = "/Custom_WF/css/style.css";
 	configWiFi.start(css,js,html,favicon,icon); 
 	flag = true;
 	String newData = configWiFi.getData();	
