@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/27 15:20:58 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/28 10:01:58 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -17,9 +17,6 @@
 /___/_/  /_/  /_/\__, /\__,_/\__/_/\____/_/ /_/   /____/\__, /____/\__/\___/_/ /_/ /_/
                 /____/                                 /____/
 _____________________________________________________________________________________*/
-/*
-		
-*/
 
 var request = require('request');
 
@@ -39,14 +36,15 @@ module.exports = function (app) {
 					console.log(error);
 				}else{				
 					if(data){	
-						zxc(data.ip);																	
+						index_action(data.ip);																	
 					}else{						
 						console.log("no module 3 saved");
+						index_action();
 					}					
 				}
 			});	
 
-			function zxc(Module3_IP) {
+			function index_action(Module3_IP) {
 				if(Module3_IP == undefined){
 					console.log("NÃO HÁ NENHUM MÓDULO 3 CONFIGURADO NO SISTEMA");
 					res.render('pages/home', {state: 3});
@@ -73,14 +71,15 @@ module.exports = function (app) {
 					console.log(error);
 				}else{				
 					if(data){		
-						zxc(data.ip);																	
+						turn_action(data.ip);																	
 					}else{						
 						console.log("no module 3 saved");
+						turn_action();
 					}					
 				}
 			});	
 
-			function zxc(Module3_IP) {
+			function turn_action(Module3_IP) {
 				var action;
 				if(req.params.turn == 'on')
 					action = '/up';
@@ -124,34 +123,38 @@ module.exports = function (app) {
 				}
 			});	
 
-
 			function select_and_send_data(_date) {					
-				var date = new Date(_date);
+				var date = new Date(_date);				
 				var ph_array = [];
 				var umidade_array = [];
 				var chuva_array = [];
 				var time_array = [];
+				var ph_time = [];
 
 				modelModulo1.find(function (error,data) {
 					if(error){
 						console.log(error);
 						res.status(500).send(error);
 					}else{
-						for (var i = data.length - 1; i >= 0; i--) {						
-							if(date.getTime() <= data[i].date.getTime()){
-								ph_array.push(data[i].pH);
+						for (var i = data.length - 1; i != 0; i--) {						
+							if(date.getTime() <= data[i].date.getTime()){								
 								umidade_array.push(data[i].umidade); 
 								chuva_array.push(data[i].chuva);	
-								time_array.push(data[i].date);								 
+								time_array.push(data[i].date);
+
+								if(data[i].pH < 13){
+									ph_array.push(data[i].pH);
+									ph_time.push(data[i].date);
+								}														 
 							}														
 						}	
 						var JSONChart ={
 							labels: time_array,
+							ph_labels: ph_time,
 							pH: ph_array,
 							umidade: umidade_array,
 							chuva: chuva_array
-						}
-						console.log(JSONChart);		
+						}		
 						res.send(JSONChart);																			
 					}
 				});							

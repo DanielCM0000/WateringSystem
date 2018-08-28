@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/27 15:18:05 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/27 23:31:45 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -42,8 +42,6 @@ module.exports = function (app){
 	var decisionparameters = app.model.decisionparameters;	
 	var modelModulo3 =  app.model.modulo3;
 
-	//HELPER
-	
 	//PARAMENTROS QUE SÃO COMPARADOS COM OS DADOS DOS SENSORES
 	var ponto_de_murcha, capacidade_de_campo, pH_max, pH_min;	
 
@@ -70,16 +68,16 @@ module.exports = function (app){
 					console.log(error);
 				}else{				
 					if(data){	
-						zxc(data.ip);																	
+						decideBasedOn_action(data.ip);																	
 					}else{						
 						console.log("no module 3 saved");
 					}					
 				}
 			});	
 				
-			function zxc(IPdomodulo3) {
+			function decideBasedOn_action(IPdomodulo3) {
 				console.log(IPdomodulo3);
-				if((pH > pH_max) || (pH < pH_min)){// AVISAR O USÁRIO QUE O PH ESTÁ FORA DA FAIXA
+				if(pH > pH_max || pH < pH_min && pH < 13){// AVISAR O USÁRIO QUE O PH ESTÁ FORA DA FAIXA
 					if(pH > pH_max){
 						console.log("pH: " + pH);
 						console.log("pH_max: " + pH_max);

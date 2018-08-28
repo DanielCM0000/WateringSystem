@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/13 15:32:45 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/08/28 11:32:45 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -23,11 +23,15 @@ ________________________________________________________________________________
 #include <ArduinoJson.h>
 #include <ESP8266HTTPClient.h>
 #include <serverController.h>
+#include <Ticker.h>
 
+bool flag = false;
+Ticker myTicker;
 WiFiConfig configWiFi;//BY DEFAULT: D6 - RESET, 0X00 - EEPROM
 
-void setup() {
-	Serial.begin(9600);
+void setup(){
+	Serial.begin(9600);  
+	myTicker.attach(3*60,doSomething);
 	pinMode(D3,OUTPUT);
     pinMode(LED_BUILTIN,OUTPUT);
 
@@ -35,7 +39,7 @@ void setup() {
 	
 	String html = "/Custom_WF/html/Param.html", favicon = "/Custom_WF/img/L.png", icon = "/Custom_WF/img/L.png", js = "/Custom_WF/js/jquery.js;/Custom_WF/js/script.js",css = "/Custom_WF/css/style.css";
 	configWiFi.start(css,js,html,favicon,icon); 
-
+	flag = true;
 	String newData = configWiFi.getData();	
 	if(newData.length() != 0){			
 		RW_F.writeFile(newData, "/DB/config.json");//SE HOUVER ALGUM DADO NOVO, ELE SERÁ SALVO NA MEMÓRIA FLASH	
@@ -72,5 +76,11 @@ void loop() {
 	serverController server(D3,LED_BUILTIN);
 	while(true){
 	    server.handle();
+	}
+}
+
+void doSomething(void){
+	if(!flag && WiFi.status() != WL_CONNECTED){
+		ESP.restart();
 	}
 }
