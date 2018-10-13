@@ -3,7 +3,7 @@ html.no-js(lang='')
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    title IrrigationSystem
+    title Sistema de Irrigação
     meta(name='description', content='IrrigationSystem')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='shortcut icon', href='/assets/images/favicon.png')
@@ -20,7 +20,7 @@ html.no-js(lang='')
         .navbar-header
           button.navbar-toggler(type='button', data-toggle='collapse', data-target='#main-menu', aria-controls='main-menu', aria-expanded='false', aria-label='Toggle navigation')
             i.fa.fa-bars
-          a.navbar-brand(href='./') sistema de Irrigação
+          a.navbar-brand(href='./') Sistema de Irrigação
           a.navbar-brand.hidden(href='./') SI
         #main-menu.main-menu.collapse.navbar-collapse
           ul.nav.navbar-nav
@@ -28,6 +28,10 @@ html.no-js(lang='')
               a(href='/home')
                 i.menu-icon.fa.fa-dashboard
                 | Home
+            li.active
+              a(href='/graph')
+                i.menu-icon.fa.fa-area-chart
+                | Gráfico
             h3.menu-title Configurações
             // /.menu-title
             li.menu-item-has-children.dropdown
@@ -38,6 +42,9 @@ html.no-js(lang='')
                 li
                   i.fa.fa-puzzle-piece
                   a(href='/configuracao') Configuração
+                li
+                  i.fa.fa-remove
+                  a(href='#') Reset
         // /.navbar-collapse
     // /#left-panel
     // Right Panel
@@ -50,7 +57,7 @@ html.no-js(lang='')
               i.fa.fa.fa-tasks
             .header-left
               h1
-                | Irrigation System
+                | Sistema de Irrigação
                 h1
       // /header
       // Header

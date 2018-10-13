@@ -2,153 +2,123 @@
 <html class="no-js" lang=""> 
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>IrrigationSystem</title>
-    <meta name="description" content="IrrigationSystem">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>IrrigationSystem</title>
+	<meta name="description" content="IrrigationSystem">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="apple-touch-icon" href="apple-icon.png">
+	<link rel="shortcut icon" href="public/favicon.png">
+	<link rel="stylesheet" href="public/assets/css/normalize.css">
 
-    <link rel="apple-touch-icon" href="apple-icon.png">
-    <link rel="shortcut icon" href="public/favicon.png">
+	<link rel="stylesheet" href="public/assets/css/bootstrap.css">   
 
-    <link rel="stylesheet" href="public/assets/css/normalize.css">
-    <link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="public/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="public/assets/css/themify-icons.css">
-    <link rel="stylesheet" href="public/assets/css/flag-icon.min.css">
-    <link rel="stylesheet" href="public/assets/css/cs-skin-elastic.css">
-    <!-- <link rel="stylesheet" href="public/assets/css/bootstrap-select.less"> -->
-    <link rel="stylesheet" href="public/assets/scss/style.css">
-    <link href="public/assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="public/assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="public/assets/css/themify-icons.css">
+	<link rel="stylesheet" href="public/assets/css/flag-icon.min.css">
+	<link rel="stylesheet" href="public/assets/css/cs-skin-elastic.css">
+	<link rel="stylesheet" href="public/assets/scss/style.css">   
+	<link rel="stylesheet" href="public/style.css">  
 
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+	<script src="public/assets/js/vendor/jquery-2.1.4.min.js"></script>
 
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
+	<!-- Left Panel -->
+	<aside id="left-panel" class="left-panel">
+		<nav class="navbar navbar-expand-sm navbar-default">
+			<div class="navbar-header">  
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fa fa-bars"></i>
+				</button>             
+				<a class="navbar-brand" href="./">IrrigationSystem</a>
+				<a class="navbar-brand hidden" href="./">IS</a>
+			</div>
+			<div id="main-menu" class="main-menu collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li >
+						<a href="index.html"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>                        
+					</li>
+					<li class="active">
+						<a href="index.html"> <i class="menu-icon fa fa-area-chart"></i>Graph</a>                        
+					</li>                    
+					<h3 class="menu-title">Configurações</h3><!-- /.menu-title -->
+					<li class="menu-item-has-children dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Configurações</a>
+						<ul class="sub-menu children dropdown-menu">
+							<li><i class="fa fa-puzzle-piece"></i><a href="#">Buttons</a></li>                            
+						</ul>
+					</li>   
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</nav>
+	</aside><!-- /#left-panel -->
 
+	<!-- Right Panel -->
+	<div id="right-panel" class="right-panel">
+		<!-- Header-->
+		<header id="header" class="header">
+			<div class="header-menu">
+				<div class="col-sm-7">
+					<a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+					<div class="header-left">
+						<h1>Irrigation System<h1>
+					</div> 
+				</div> 
+			</div>
+		</header><!-- /header -->
+		<!-- Header-->
+	   
+		<div class="content mt-3">              
 
-        <!-- Left Panel -->
+			<div class="container">
+				<canvas id="phChart" ></canvas>
+				<form action="" class="form-horizontal"  role="form"> 
+					<div>
+						<input type="datetime-local" name="bday">
+						<input type="datetime-local" name="bday2">
+					</div> 
+					<br>
+					<!-- Default inline 1-->  				
+					<row>
+						<div class="col-md-4 checkbox checkbox-success checkbox-inline">
+							<input type="checkbox" id="inlineCheckbox1" value="option1">
+							<label for="inlineCheckbox1"> Inline One </label>
+						</div>
 
-    <aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm navbar-default">
+						<div class="col-md-4 checkbox checkbox-success checkbox-inline">
+							<input type="checkbox" id="inlineCheckbox2" value="option1">
+							<label for="inlineCheckbox2"> Inline Two </label>
+						</div>
 
-            <div class="navbar-header">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand" href="./">IrrigationSystem</a>
-                <a class="navbar-brand hidden" href="./">IS</a>
-            </div>
+						<div class="col-md-4 checkbox checkbox-success checkbox-inline">
+							<input type="checkbox" id="inlineCheckbox3" value="option1">
+							<label for="inlineCheckbox3"> Inline Three </label>
+						</div>
+					</row>            
 
-            <div id="main-menu" class="main-menu collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a href="index.html"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
-                    </li>
-                    <h3 class="menu-title">Configurações</h3><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Configurações</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Buttons</a></li>                            
-                        </ul>
-                    </li>   
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </nav>
-    </aside><!-- /#left-panel -->
+					<br>
+					<div><button type="submit" class="btn btn-primary btn-block">Gerar gráfico</button></div>
+					
+				</form>
+				<br>
+			</div>     
+		</div> <!-- .content -->		
+	</div><!-- /#right-panel -->
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+	<script src="public/assets/js/plugins.js"></script>
+	<script src="public/assets/js/main.js"></script>
 
-    <!-- Right Panel -->
+	
+	<script src="public/assets/js/dashboard.js"></script>
+	<script src="public/assets/js/widgets.js"></script>   
 
-    <div id="right-panel" class="right-panel">
-
-        <!-- Header-->
-        <header id="header" class="header">
-
-            <div class="header-menu">
-
-                <div class="col-sm-7">
-                    <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
-                    <div class="header-left">
-                        <h1>Irrigation System<h1>
-                    </div> 
-                </div> 
-            </div>
-        </header><!-- /header -->
-        <!-- Header-->
-       
-
-        <div class="content mt-3">       
-
-            <div class="col-xl-6 ">
-                <canvas id="phChart" ></canvas>
-            </div>        
-
-             <div class="col-xl-6 ">
-                <canvas id="umidadeChart" ></canvas>
-            </div>    
-
-             <div class="col-xl-6 ">
-                <canvas id="chuvaChart" ></canvas>
-            </div>         
-        
-
-            
-
-            <div class="col-sm-12">
-                <button type="button" class="btn btn-outline-primary btn-lg btn-block">Irrigar agora</button>
-                <button type="button" class="btn btn-outline-danger btn-lg btn-block">Parar de irrigar</button>
-            </div>
-            <!--/.col-->
-           
-
-        </div> <!-- .content -->
-    </div><!-- /#right-panel -->
-
-    <!-- Right Panel -->
-
-    <script src="public/assets/js/vendor/jquery-2.1.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-    <script src="public/assets/js/plugins.js"></script>
-    <script src="public/assets/js/main.js"></script>
-
-
-    <script src="public/assets/js/lib/chart-js/Chart.bundle.js"></script>
-    <script src="public/assets/js/dashboard.js"></script>
-    <script src="public/assets/js/widgets.js"></script>
-    <script src="public/assets/js/lib/vector-map/jquery.vmap.js"></script>
-    <script src="public/assets/js/lib/vector-map/jquery.vmap.min.js"></script>
-    <script src="public/assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
-    <script src="public/assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
-    <script>
-        ( function ( $ ) {
-            "use strict";
-
-            jQuery( '#vmap' ).vectorMap( {
-                map: 'world_en',
-                backgroundColor: null,
-                color: '#ffffff',
-                hoverOpacity: 0.7,
-                selectedColor: '#1de9b6',
-                enableZoom: true,
-                showTooltip: true,
-                values: sample_data,
-                scaleColors: [ '#1de9b6', '#03a9f5' ],
-                normalizeFunction: 'polynomial'
-            } );
-        } )( jQuery );
-    </script>
-
-     <!--  Chart js -->
-    <script src="public/assets/js/lib/chart-js/Chart.bundle.js"></script>
-    <script src="public/assets/js/lib/chart-js/chartjs-init.js"></script>
-    <script type="text/javascript" src="phChart.js"></script>
-    <script type="text/javascript" src="umidadeChart.js"></script>
-    <script type="text/javascript" src="chuvaChart.js"></script>
-
+	<!--  Chart js -->
+	<script src="public/assets/js/lib/chart-js/Chart.bundle.js"></script>
+	<script src="public/assets/js/lib/chart-js/chartjs-init.js"></script>
+	<script type="text/javascript" src="phChart.js"></script>
 </body>
 </html>
-
-<!--https://cdnjs.com/libraries/Chart.js-->
-<!--http://www.chartjs.org/docs/latest/-->

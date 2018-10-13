@@ -1,0 +1,88 @@
+doctype html
+html.no-js(lang='')
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		title Sistema de Irrigação
+		meta(name='description', content='IrrigationSystem')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		link(rel='shortcut icon', href='/assets/images/favicon.png')
+		link(rel='stylesheet', href='/assets/css/normalize.css')
+		link(rel='stylesheet', href='/assets/css/bootstrap.css')
+		link(rel='stylesheet', href='/assets/css/font-awesome.min.css')
+		link(rel='stylesheet', href='/assets/css/themify-icons.css')
+		link(rel='stylesheet', href='/assets/css/flag-icon.min.css')
+		link(rel='stylesheet', href='/assets/css/cs-skin-elastic.css')
+		link(rel='stylesheet', href='/assets/scss/style.css')
+		link(rel='stylesheet', href='/css/datetime.css')
+		link(href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800', rel='stylesheet', type='text/css')
+	body
+		// Left Panel
+		aside#left-panel.left-panel
+			nav.navbar.navbar-expand-sm.navbar-default
+				.navbar-header
+					button.navbar-toggler(type='button', data-toggle='collapse', data-target='#main-menu', aria-controls='main-menu', aria-expanded='false', aria-label='Toggle navigation')
+						i.fa.fa-bars
+					a.navbar-brand(href='./') Sistema de Irrigação
+					a.navbar-brand.hidden(href='./') SI
+				#main-menu.main-menu.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li
+							a(href='/home')
+								i.menu-icon.fa.fa-dashboard
+								| Home
+						li.active
+							a(href='/graph')
+								i.menu-icon.fa.fa-area-chart
+								| Gráfico						
+						li.menu-item-has-children.dropdown
+							a.dropdown-toggle(href='#', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+								i.menu-icon.fa.fa-laptop
+								| Configurações
+							ul.sub-menu.children.dropdown-menu
+								li
+									i.fa.fa-puzzle-piece
+									a(href='/configuracao') Configuração
+								li
+									i.fa.fa-remove
+									a(href='#') Reset
+				// /.navbar-collapse
+				// /#left-panel
+				// Right Panel
+		#right-panel.right-panel
+			// Header
+			header#header.header
+				.header-menu
+					.col-sm-7
+						a#menuToggle.menutoggle.pull-left
+							i.fa.fa.fa-tasks
+						.header-left
+							h1 Sistema de Irrigação
+							h1
+			// /header
+			// Header
+			.content.mt-3
+				.container
+					canvas#chart
+					form.form-horizontal(role='form')
+						div
+							input(type='datetime-local', id='date1')
+							input(type='datetime-local', id='date2')
+						br
+						// Default inline 1
+						br
+						div
+							button.btn.btn-primary.btn-block(type='button', onclick="button_click()") Gerar gráfico
+					br
+			// .content
+			// /#right-panel
+		script(src='/assets/js/vendor/jquery-2.1.4.min.js')
+		script(type='text/javascript',src='/js/jquery.min.js')
+		script(src='/assets/js/main.js')
+		script(src='/assets/js/plugins.js')
+		script(src='/assets/js/dashboard.js')
+		script(src='/assets/js/widgets.js')
+		// Chart js
+		script(src='/assets/js/lib/chart-js/Chart.bundle.js')
+		script(src='/assets/js/lib/chart-js/chartjs-init.js')
+		script(src='/js/graphData.js')
