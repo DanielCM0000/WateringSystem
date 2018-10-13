@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 09:19:00 by anonymous         #+#    #+#             */
-/*   Updated: 2018/08/28 10:01:58 by anonymous        ###   ########.fr       */
+/*   Updated: 2018/10/11 15:37:07 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*_____________________________________________________________________________________ 
@@ -135,19 +135,24 @@ module.exports = function (app) {
 					if(error){
 						console.log(error);
 						res.status(500).send(error);
-					}else{
-						for (var i = data.length - 1; i != 0; i--) {						
-							if(date.getTime() <= data[i].date.getTime()){								
-								umidade_array.push(data[i].umidade); 
-								chuva_array.push(data[i].chuva);	
-								time_array.push(data[i].date);
+					}else{	
+						if(data != null || data != undefined){	
+							console.log(data);				
+							for (var i = data.length - 1; i != 0; i--) {						
+								if(date.getTime() <= data[i].date.getTime()){								
+									umidade_array.push(data[i].umidade); 
+									chuva_array.push(data[i].chuva);	
+									time_array.push(data[i].date);
 
-								if(data[i].pH < 13){
-									ph_array.push(data[i].pH);
-									ph_time.push(data[i].date);
-								}														 
-							}														
-						}	
+									if(data[i].pH < 13){
+										ph_array.push(data[i].pH);
+										ph_time.push(data[i].date);
+									}														 
+								}														
+							}								
+						}else{
+							console.log("nenhum dados vindo dos sensores!");							
+						}
 						var JSONChart ={
 							labels: time_array,
 							ph_labels: ph_time,

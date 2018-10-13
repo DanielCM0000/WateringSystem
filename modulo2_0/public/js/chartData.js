@@ -118,11 +118,7 @@ function create_chart(_chart_id , _label , _backgroundColor,  _labels, _data){
 			}]
 		},
 		options: {			
-			responsive: true,
-			//animation: {
-		        //duration: 0, // general animation time
-		    //},
-			//responsiveAnimationDuration: 0, // animation duration after a resize				
+			responsive: true,				
 			scales: {				
 				xAxes: [{
 		            ticks: {

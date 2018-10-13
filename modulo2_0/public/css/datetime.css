@@ -1,0 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   datetime.css                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/05 17:16:36 by anonymous         #+#    #+#             */
+/*   Updated: 2018/10/13 08:28:02 by anonymous        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+/*
+* @Author: DanielCM0000
+* @Date:   2018-10-05 15:35:03
+* @Last Modified by:   DanielCM0000
+* @Last Modified time: 2018-10-13 08:28:54
+*/
+input[type=datetime-local] {
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		box-sizing: border-box;
+		border: 2px solid black;
+		border-radius: 4px;
+		background-color: gray;
+		color: white;
+}
